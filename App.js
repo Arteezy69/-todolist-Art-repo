@@ -10,9 +10,10 @@ import AddTodos from './components/AddTodos';
 export default function App() {
   return (
     <View style={styles.container}>
-
+      
       <Navbar />
-
+      
+      
       <View style={styles.list}>
 
         <List />
@@ -30,7 +31,8 @@ const styles = StyleSheet.create({
   },
 
   list: {
-    margin: 30,
+    margin: 20,
+    padding: 20,
     flex: 1,
 
 
