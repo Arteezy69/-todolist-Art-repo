@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "react-mobile-sos",
+    "name": "To do List",
     "slug": "react-mobile-sos",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.arteezy.reactmobilesos"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "810709f0-2b2d-4a19-906c-69249d5bc002"
+      }
     }
   }
 }

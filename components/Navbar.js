@@ -1,13 +1,8 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { FlatList } from 'react-native-web';
+
 
 const Navbar = (props) => {
-    const [todos, setTodos] = useState([
-        { text: 'Art', id: '1' },
-        { text: 'Alvin', id: '2' },
-        { text: 'Pong', id: '3' },
-    ]);
 
     return (
         <View style={styles.navbar}>

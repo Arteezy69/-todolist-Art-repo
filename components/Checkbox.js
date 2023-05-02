@@ -1,9 +1,12 @@
 import Checkbox from 'expo-checkbox';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, Button, View } from 'react-native';
 
 export default function CheckBox() {
+
     const [isChecked, setChecked] = useState(false);
+
+
 
     return (
         <View style={styles.container}>
@@ -20,13 +23,13 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        padding:10
+        padding: 5
 
     },
     section: {
-        paddingTop:10,
+        paddingTop: 10,
         flexDirection: 'row',
-        alignItems: 'center',
+
     },
 
 });

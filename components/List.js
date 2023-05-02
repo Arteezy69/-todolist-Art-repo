@@ -1,70 +1,145 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, FlatList, TextInput, Button, View, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import TodoItems from './TodoItems';
-import AddTodos from './AddTodos';
 import CheckBox from './Checkbox';
+import { MaterialIcons } from '@expo/vector-icons';
 
-export default function List() {
-    const [todos, setTodos] = useState([
-        { text: 'Play Dota', id: '1' },
-        { text: 'Sleep', id: '2' },
-        { text: 'Repeat', id: '3' },
-    ]);
+const List = () => {
+  const [todos, setTodos] = useState([]);
+  const [completedItems, setCompletedItems] = useState([]);
+  const [todoText, setTodoText] = useState('');
 
-    const deleteFunction = (id) => {
-        setTodos((prevTodos) => {
-            return prevTodos.filter(todos => todos.id != id);
-        });
+  const submitTodo = () => {
+    if (todoText.trim()) {
+      setTodos([...todos, { text: todoText, completed: false }]);
+      setTodoText('');
     }
+  };
+  
+  const deleteHandler = index => {
+    const newCompletedItems = [...completedItems];
+    newCompletedItems.splice(index, 1);
+    setCompletedItems(newCompletedItems);
+  };
 
+  const toggleCompleted = index => {
+    const newTodoItems = [...todos];
+    const updatedItem = { ...newTodoItems[index], completed: true };
+    newTodoItems.splice(index, 1);
+    setTodos(newTodoItems);
+    setCompletedItems([...completedItems, updatedItem]);
+  };
 
-
-    const SubmitHandler = (text) => {
-        setTodos((prevTodos) => {
-            return [
-                { text: text, id: Math.random().toString() },
-                ...prevTodos
-            ]
-        })
-    }
+  const renderItem = ({ item, index }) => {
     return (
-        <TouchableWithoutFeedback onPress={() => {
-            Keyboard.dismiss();
-        }}>
-            <View style={styles.container}>
+      <View style={styles.todoItem}>
 
-                <AddTodos submitHandler={SubmitHandler} />
-                <View style={styles.list}>
-                   
-                    <FlatList
-                        data={todos}
-                        renderItem={({ item }) => (
-                            <TodoItems item={item} deleteFunction={deleteFunction} />
-                        )}
+        <TouchableOpacity onPress={() => toggleCompleted(index)} >
 
-                    />
-                </View>
-            </View>
-        </TouchableWithoutFeedback>
+          <Text style={[styles.todoText, item.completed && styles.completedText]}>
+            <CheckBox />
+            {item.text}
+          </Text>
+        </TouchableOpacity>
 
-    )
+        {item.completed && (
+          <TouchableOpacity onPress={() => deleteHandler(index)}>
+            <MaterialIcons size={25} color='black' name='delete' />
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  };
+
+
+
+  return (
+    <TouchableWithoutFeedback onPress={() => {
+      Keyboard.dismiss();
+    }}>
+      <View style={styles.container}>
+
+        <View>
+
+          <Text style={styles.heading}>List </Text>
+
+          <TextInput
+            style={styles.input}
+            placeholder=""
+            value={todoText}
+            onChangeText={text => setTodoText(text)}
+          />
+          <TouchableOpacity style={styles.button} onPress={submitTodo}>
+            <Text style={styles.buttonText}>ADD</Text>
+          </TouchableOpacity>
+
+          <FlatList
+            data={todos}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+
+        </View>
+
+        <Text style={styles.heading}>Completed List </Text>
+
+        <FlatList
+          data={completedItems}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+
+
+
+      </View>
+    </TouchableWithoutFeedback>
+
+  )
 }
 
 const styles = StyleSheet.create({
-    container: {
-
-    },
-    list: {
-        paddingTop: 20,
-
-        alignItems: 'center',
-        fontWeight: '30',
-        margin: 30,
-        color: "fff"
-
-    },
-
+  container: {
+    flex: 1,
+    padding: 20
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: 'normal',
+    textAlign: 'left',
+    marginBottom: 20
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    marginBottom: 20
+  },
+  button: {
+    backgroundColor: '#0A4D68',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
+  todoItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    marginBottom: 10
+  },
+  todoText: {
+    fontSize: 18
+  },
+  completedText: {
+    textDecorationLine: 'line-through',
+    color: '#B04759'
+  },
 
 });
-
-
+export default List;
