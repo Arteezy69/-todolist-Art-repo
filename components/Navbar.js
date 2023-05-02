@@ -8,6 +8,7 @@ const Navbar = (props) => {
         <View style={styles.navbar}>
             <Text style={styles.title}>
                 To Do List
+                
             </Text>
 
         </View>
