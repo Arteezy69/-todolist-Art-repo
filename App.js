@@ -10,9 +10,7 @@ import List from './components/List';
 export default function App() {
   return (
     <View style={styles.container}>
-
       <Navbar />
-
       <View style={styles.list}>
         <List />
       </View>
