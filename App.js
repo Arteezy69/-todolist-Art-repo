@@ -14,10 +14,7 @@ export default function App() {
       <Navbar />
 
       <View style={styles.list}>
-
-
         <List />
-
       </View>
     </View>
   );
